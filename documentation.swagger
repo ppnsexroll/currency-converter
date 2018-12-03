@@ -1,0 +1,127 @@
+{
+    "swagger": "2.0",
+    "info":
+    {
+        "description": "API that contains the conversion service that do a conversion between currencies and returns the amount converted",
+        "version": "1.0.0",
+        "title": "Currency Conversion Project",
+        "contact":
+        {
+            "email": "felipe.barros.pt@gmail.com"
+        },
+    },
+    "paths":
+    {
+        "/conversion":
+        {
+            "post":
+            {
+                "summary": "Convert from a currency to other currency",
+                "description": "You should inform the `from` currency and `to` currency to do the conversion. \n The currencies should be different from one another.\n The currency list allowed is `USD, BRL, EUR`.\n The amount ust be greater than 0.",
+                "operationId": "addPet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "Request body with conversion data",
+                    "required": true,
+                    "schema":
+                    {
+                        "$ref": "#/definitions/ConversionDTO"
+                    }
+                }],
+                "responses":
+                {
+                    "400":
+                    {
+                        "description": "Failure operation",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/ApiResponseFailure"
+                        }
+                    },
+                    "200":
+                    {
+                        "description": "Successful operation",
+                        "schema":
+                        {
+                            "$ref": "#/definitions/ApiResponseSuccess"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions":
+    {
+        "ConversionDTO":
+        {
+            "type": "object",
+            "required": [
+                "from",
+                "to",
+                "amount"
+            ],
+            "properties":
+            {
+                "from":
+                {
+                    "type": "string",
+                    "example": "USA"
+                },
+                "to":
+                {
+                    "type": "string",
+                    "example": "BRL"
+                },
+                "amount":
+                {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1
+                }
+            }
+        },
+        "ApiResponseSuccess":
+        {
+            "type": "object",
+            "properties":
+            {
+                "status":
+                {
+                    "type": "boolean",
+                    "example": true
+                },
+                "amount":
+                {
+                    "type": "number",
+                    "format": "float",
+                    "example": 2
+                }
+            }
+        },
+        "ApiResponseFailure":
+        {
+            "type": "object",
+            "properties":
+            {
+                "status":
+                {
+                    "type": "boolean",
+                    "example": false
+                },
+                "message":
+                {
+                    "type": "string",
+                    "example": "The body cannot be empty"
+                }
+            }
+        }
+    }
+}
